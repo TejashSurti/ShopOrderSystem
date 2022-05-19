@@ -17,6 +17,8 @@ namespace MyShop.DataAccess.SQL
 
         public DbSet<Product> Products { get; set; } //db set specifies what models we want to store in DB
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
+        public DbSet<BasketItem> BasketItems { get; set; }
     }
 }
 

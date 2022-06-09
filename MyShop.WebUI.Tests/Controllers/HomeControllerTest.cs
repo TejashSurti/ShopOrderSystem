@@ -6,15 +6,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
+using MyShop.Core.Contracts;
+using MyShop.Core.Models;
+using MyShop.Core.ViewModels;
 
 namespace MyShop.WebUI.Tests.Controllers
 {
     [TestClass]
-    public class HomeControllerTest
+    public class UnitTest1
     {
         [TestMethod]
-        public void Index()
+        public void IndexPageDoesReturnProducts()
         {
+            IRepository<Product> productContext = new Mocks.MockContext<Product>();
+            IRepository<ProductCategory> productCategory = new Mocks.MockContext<ProductCategory>();
+
+            productContext.Insert(new Product());
+            
+            HomeController controller = new HomeController(productContext, productCategory);
+
+            var result = controller.Index() as ViewResult;
+            var viewmodel = (ProductListViewModel) result.ViewData.Model;
+
+            Assert.AreEqual(1, viewmodel.Products.Count());
+        }
+        //public void Index()
+        //{
             // Arrange
             //HomeController controller = new HomeController();
 
@@ -23,7 +40,7 @@ namespace MyShop.WebUI.Tests.Controllers
 
             //// Assert
             //Assert.IsNotNull(result);
-        }
+        //}
 
         //[TestMethod]
         //public void About()
